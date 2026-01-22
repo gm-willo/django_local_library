@@ -58,7 +58,7 @@ class Language(models.Model):
             UniqueConstraint(
                 Lower("name"),
                 name="language_name_case_insensitive_unique",
-                violation_error_message="Language already exists (case insensitive match)"
+                violation_error_message="Language already exists (case insensitive match)",
             ),
         ]
 
@@ -86,6 +86,12 @@ class Book(models.Model):
 
     # Foreign key used because book can only have one language, but languages can have multiple books.
     language = models.ForeignKey("Language", on_delete=models.SET_NULL, null=True)
+
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ", ".join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = "Genre"
 
     def __str__(self):
         """String for representing the Model object."""
