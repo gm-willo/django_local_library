@@ -35,7 +35,7 @@
               {% if user.is_authenticated %}
                 <li>User: {{ user.get_username }}</li>
                 <li>
-                  <a href={% url "my-borrowed" %}>My Borrowed</a>
+                  <a href="{% url "my-borrowed" %}">My Borrowed</a>
                 </li>
                 <li>
                   <form id="logout-form" method="post" action="{% url 'logout' %}">
@@ -52,8 +52,14 @@
               {% if perms.catalog.can_mark_returned %}
                 <li>Staff</li>
                 <li>
-                  <a href={% url "borrowed-books" %}>All Borrowed</a>
+                  <a href="{% url "borrowed-books" %}">All Borrowed</a>
                 </li>
+                {% if perms.catalog.add_author %}
+                  <li><a href="{% url "author-create" %}">Create author</a></li>
+                {% endif %}
+                {% if perms.catalog.add_book %}
+                  <li><a href="{% url "book-create" %}">Create book</a></li>
+                {% endif %}
               {% endif %}
             </ul>
           {% endblock sidebar %}
