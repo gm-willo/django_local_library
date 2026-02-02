@@ -66,7 +66,7 @@ class AuthorListView(generic.ListView):
     """Generic class-based list view for a list of authors."""
 
     model = Author
-    paginate_by = 2
+    paginate_by = 10
 
 
 class AuthorDetailView(generic.DetailView):
@@ -105,6 +105,7 @@ class BorrowedBooksByUsersListView(PermissionRequiredMixin, generic.ListView):
 @login_required
 @permission_required("catalog.can_mark_returned", raise_exception=True)
 def renew_book_librarian(request, pk):
+    """View function for renewing a specific BookInstance by librarian."""
     book_instance = get_object_or_404(BookInstance, pk=pk)
 
     # If this is a POST request then process the Form data
@@ -119,7 +120,7 @@ def renew_book_librarian(request, pk):
             book_instance.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse("all-borrowed"))
+            return HttpResponseRedirect(reverse("borrowed-books"))
     # If this is a GET (or any other method) create the default form.
     else:
         proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)

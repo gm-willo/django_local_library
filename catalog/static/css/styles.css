@@ -10,8 +10,10 @@ a {
 
 #logout-form {
   display: inline;
+  text-decoration: none;
 }
 #logout-form button {
   padding: 0;
   margin: 0;
+  text-decoration: none;
 }
